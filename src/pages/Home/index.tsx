@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { Button, Icon, Radio, Checkbox, message } from "antd";
-import { useStores } from "@/stroe";
+import { useStores } from "@/store";
 import http from "@/utils/http";
 
 import styles from "./styles.module.less";
