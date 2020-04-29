@@ -154,5 +154,6 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "style-resources-loader": "^1.3.3"
-  }
+  },
+  "homepage": "./"
 }

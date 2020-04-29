@@ -10,6 +10,7 @@
 6. dev-proxy + axios
 7. mobx
 8. react-router
+9. 打包后资源引用路径
 
 ## 创建
 
@@ -30,16 +31,16 @@ yarn
 yarn add react-app-polyfill
 ```
 
-```
+```ts
 // src/index.ts
 
-import 'react-app-polyfill/ie9';
-import 'react-app-polyfill/stable';
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
 ```
 
 ## 配置 alias
 
-```
+```js
 // config/webpack.config.js
 
 "@": path.resolve(__dirname, "../src"),
@@ -69,7 +70,7 @@ yarn add less less-loader style-resources-loader -D
 
 配置`config/webpack.config.js`,其他配置内容查看根据下面定义的变量查找.
 
-```
+```js
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
@@ -88,11 +89,11 @@ const cssModuleClassName = isEnvDevelopment ? "[path]__[name]__[local]" : "[hash
 
 解决提示"找不到 module.less"模块的问题
 
-```
+```ts
 // src/react-app-env.d.ts
-declare module '*.module.less' {
-  const classes: { readonly [key: string]: string }
-  export default classes
+declare module "*.module.less" {
+  const classes: { readonly [key: string]: string };
+  export default classes;
 }
 ```
 
@@ -104,7 +105,7 @@ yarn add antd@3.26.15 //兼容ie9+
 
 `config/webpack.config.js` 中的 `getStyleLoaders`方法
 
-```
+```js
 javascriptEnabled: true, //支持less可以使用变量
 ```
 
@@ -140,7 +141,7 @@ yarn add mobx@4.15.4 mobx-react //兼容ie9+
 解决 mobx 警告
 [You haven't configured observer batching which might result in unexpected behavior in some cases](https://github.com/mobxjs/mobx-react-lite/#observer-batching)
 
-```
+```ts
 // src/index.ts
 import "mobx-react-lite/batchingForReactDom";
 ```
@@ -152,3 +153,12 @@ yarn add react-router-dom @types/react-router-dom
 ```
 
 新增`src/routes.ts`,并修改`src/index.ts`和`src/App.ts`
+
+## 打包后资源引用路径
+
+默认的引用路径为`/`,这会导致打包后运行时,获取不到资源.需要修改成相对路径`./`
+
+```json
+// package.json
+"homepage": "./"
+```
