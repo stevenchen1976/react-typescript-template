@@ -11,6 +11,7 @@
 7. mobx
 8. react-router
 9. 打包后资源引用路径
+10. 自定义环境变量
 
 ## 创建
 
@@ -162,3 +163,11 @@ yarn add react-router-dom @types/react-router-dom
 // package.json
 "homepage": "./"
 ```
+
+## 自定义环境变量
+
+```
+yarn add cross-env -D
+```
+
+添加定义. 在`config/env.js`中的`getClientEnvironment`方法中添加.
