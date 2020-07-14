@@ -82,11 +82,7 @@ function getClientEnvironment(publicUrl) {
         // and `sockPort` options in webpack-dev-server.
         WDS_SOCKET_HOST: process.env.WDS_SOCKET_HOST,
         WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
-        WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
-
-        // 自定义环境变量
-        GENERATE_SOURCEMAP: process.env.GENERATE_SOURCEMAP,
-        REMOVE_LOGS: process.env.REMOVE_LOGS
+        WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT
       }
     );
   // Stringify all values so we can feed into webpack DefinePlugin

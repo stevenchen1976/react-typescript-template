@@ -30,7 +30,7 @@ const postcssNormalize = require("postcss-normalize");
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-// const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+// const shouldUseSourceMap = process.env.REACT_APP_GENERATE_SOURCEMAP !== "false";
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== "false";
@@ -43,9 +43,9 @@ const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || "10
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // 是否使用source-map
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+const shouldUseSourceMap = process.env.REACT_APP_GENERATE_SOURCEMAP !== "false";
 // 打包是否去除'console'和'debug'
-const shouldRemoveLogs = process.env.REMOVE_LOGS === "true";
+const shouldRemoveLogs = process.env.REACT_APP_REMOVE_LOGS === "true";
 
 // style files regexes
 const cssRegex = /\.css$/;

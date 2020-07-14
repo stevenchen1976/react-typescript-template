@@ -42,3 +42,5 @@ ReactDOM.render(
 );
 
 serviceWorker.unregister();
+
+console.log("init", process.env);

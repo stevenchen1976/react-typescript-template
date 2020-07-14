@@ -1,4 +1,5 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const defaultProxy = process.env.REACT_APP_DEFAULT_PROXY;
 
 const createProxy = (url = "", target = "") =>
   createProxyMiddleware(url, {
@@ -10,5 +11,5 @@ const createProxy = (url = "", target = "") =>
   });
 
 module.exports = function (app) {
-  app.use(createProxy("/proxy", "https://cnodejs.org/api/v1"));
+  app.use(createProxy("/proxy", defaultProxy));
 };

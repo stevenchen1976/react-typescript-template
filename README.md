@@ -166,8 +166,24 @@ yarn add react-router-dom @types/react-router-dom
 
 ## 自定义环境变量
 
+> [create-react-app 选项](https://create-react-app.dev/docs/adding-custom-environment-variables)
+
+直接对应模式的文件中添加即可. 获取时使用`process.env`
+
+### cross-env(选装)
+
+安装这个插件可以强制修改环境变量. **_注意: 只能修改已经定义的变量, 无法添加新变量_**
+
 ```
 yarn add cross-env -D
 ```
 
-添加定义. 在`config/env.js`中的`getClientEnvironment`方法中添加.
+在`package.json`中的`script`字段中使用
+
+```json
+"scripts": {
+    "start": "cross-env YOUR_VALUE=abcdef node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js"
+  },
+```
