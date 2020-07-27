@@ -11,7 +11,6 @@ class Counter extends StoreModule {
 
   @action
   public sub = async () => {
-    // 异步操作
     await waiting(2);
     this.$set({ count: this.count - 1 });
   };

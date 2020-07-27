@@ -13,7 +13,7 @@
 9. 打包后资源引用路径
 10. 自定义环境变量
 
-## 创建
+## 1.创建
 
 ```
 yarn create react-app my-app --template typescript
@@ -26,7 +26,7 @@ rm -rf ./.git
 yarn
 ```
 
-## 兼容 ie9+
+## 2.兼容 ie9+
 
 ```
 yarn add react-app-polyfill
@@ -39,7 +39,7 @@ import "react-app-polyfill/ie9";
 import "react-app-polyfill/stable";
 ```
 
-## 配置 alias
+## 3.配置 alias
 
 ```js
 // config/webpack.config.js
@@ -61,7 +61,7 @@ import "react-app-polyfill/stable";
 
 ```
 
-## less
+## 4.less
 
 ```
 yarn add less less-loader style-resources-loader -D
@@ -98,7 +98,7 @@ declare module "*.module.less" {
 }
 ```
 
-## antd
+## 5.antd
 
 ```
 yarn add antd@3.26.15 //兼容ie9+
@@ -112,7 +112,7 @@ javascriptEnabled: true, //支持less可以使用变量
 
 新建`src/antd-theme.less`并在`src/index.ts`中引入.
 
-## dev-proxy + axios
+## 6.dev-proxy + axios
 
 > [dev proxy](https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually)
 
@@ -126,9 +126,9 @@ yarn add http-proxy-middleware -D
 yarn add axios
 ```
 
-新建`src/utils/http.ts`
+axios 的拦截器方法放到了 mobx 中来使用. 因为`useStores`方法无法在非函数组件中使用
 
-## mobx
+## 7.mobx
 
 > [mobx-react 例子](https://mobx-react.js.org/recipes-context)
 
@@ -147,7 +147,9 @@ yarn add mobx@4.15.4 mobx-react //兼容ie9+
 import "mobx-react-lite/batchingForReactDom";
 ```
 
-## react-router
+**_不要忘了使用`observer`包裹逻辑组件_**
+
+## 8.react-router
 
 ```
 yarn add react-router-dom @types/react-router-dom
@@ -155,7 +157,7 @@ yarn add react-router-dom @types/react-router-dom
 
 新增`src/routes.ts`,并修改`src/index.ts`和`src/App.ts`
 
-## 打包后资源引用路径
+## 9.打包后资源引用路径
 
 默认的引用路径为`/`,这会导致打包后运行时,获取不到资源.需要修改成相对路径`./`
 
@@ -164,7 +166,7 @@ yarn add react-router-dom @types/react-router-dom
 "homepage": "./"
 ```
 
-## 自定义环境变量
+## 10.自定义环境变量
 
 > [create-react-app 选项](https://create-react-app.dev/docs/adding-custom-environment-variables)
 

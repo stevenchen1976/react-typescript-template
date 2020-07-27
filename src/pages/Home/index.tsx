@@ -2,13 +2,13 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { Button, Icon, Radio, Checkbox, message } from "antd";
-import { useStores } from "@/store";
-import http from "@/utils/http";
 
+import { useStores } from "@/store";
+import { apiGetTopics } from "@/apis/common";
 import styles from "./styles.module.less";
 
 const Home: React.FC = () => {
-  const { counter } = useStores();
+  const { counter, request } = useStores();
 
   return (
     <>
@@ -57,8 +57,9 @@ const Home: React.FC = () => {
           <Button
             type="primary"
             ghost
+            loading={request.isFetching}
             onClick={() => {
-              http.get("/topics").then((res) => {
+              apiGetTopics().then((res) => {
                 message.success("请求成功");
                 console.log("data from axios", res);
               });

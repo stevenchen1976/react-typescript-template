@@ -1,25 +1,20 @@
 import axios from "axios";
-import { isDev } from "@/utils";
 
-const DEFAULT_PROXY = "/proxy";
-// 自定义代理时,使用的代理前缀
-const CUSTORM_PROXY_PREFIX = /^\/api-/;
-const HTTP_REGX = /^http(s?):\/\//;
+const isDev = process.env.NODE_ENV === "development";
+const defaultProxyPrefix = process.env.REACT_APP_DEFAULT_PROXY_PREFIX;
+const customProxyRegx = new RegExp(process.env.REACT_APP_CUSTOM_PROXY_REGEXP || "");
+const httpRegx = /^http(s?):\/\//;
 
-const withProxy = (url: string) => {
-  // 如果以http或https协议开头,则不使用代理
-  if (HTTP_REGX.test(url)) {
+export const withProxy = (url = "") => {
+  if (httpRegx.test(url)) {
     return url;
   }
 
-  // 检查url是否匹配自定义代理规则
-  const hasCustomPrefix = CUSTORM_PROXY_PREFIX.test(url);
-
+  const hasCustomPrefix = customProxyRegx.test(url);
   if (hasCustomPrefix) {
     if (isDev) {
       return url;
     } else {
-      // 生产模式下, 自动去除自定义proxy
       const urlArr = url.split("/");
       urlArr.splice(0, 2);
       const baseReqUrl = "/" + urlArr.join("/");
@@ -27,11 +22,11 @@ const withProxy = (url: string) => {
       return baseReqUrl;
     }
   } else {
-    return isDev ? DEFAULT_PROXY + url : url;
+    return isDev ? defaultProxyPrefix + url : url;
   }
 };
 
-const axiosIns = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "",
   timeout: 10000,
   responseType: "json",
@@ -40,31 +35,11 @@ const axiosIns = axios.create({
   }
 });
 
-axiosIns.interceptors.request.use(
-  (config) => {
-    let { url = "", headers = {} } = config;
-    const token = window.localStorage.getItem("token");
-    token && (headers.Authorization = token);
-    url = withProxy(url);
-
-    return { ...config, url, headers };
-  },
-  (error) => Promise.reject(error)
-);
-
-axiosIns.interceptors.response.use(
-  (responce) => {
-    console.log("axios", responce);
-    return responce.data;
-  },
-  (error) => Promise.reject(error)
-);
-
 const http = {
-  get: (url: string, params = {}) => axiosIns.get(url, { params }),
-  post: (url: string, params = {}) => axiosIns.post(url, params),
-  delete: (url: string, params = {}) => axiosIns.delete(url, { params }),
-  put: (url: string, params = {}) => axiosIns.put(url, params)
+  get: (url: string, params = {}) => axiosInstance.get(url, { params }),
+  delete: (url: string, params = {}) => axiosInstance.delete(url, { params }),
+  post: axiosInstance.post,
+  put: axiosInstance.put
 };
 
 export default http;
