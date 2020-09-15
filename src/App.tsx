@@ -1,13 +1,13 @@
-import React, { Suspense } from "react";
-import { Route, Switch } from "react-router-dom";
-import { observer } from "mobx-react";
+import React, { Suspense } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import { observer } from 'mobx-react'
 
-import routes from "./routes";
-import { useStores } from "@/store";
-import { FullScreenLoading } from "@/components";
+import routes from './routes'
+import { useStores } from '@/store'
+import { FullScreenLoading } from '@/components'
 
 const App: React.FC = () => {
-  const { request } = useStores();
+  const { request } = useStores()
 
   return (
     <>
@@ -21,7 +21,7 @@ const App: React.FC = () => {
 
       <FullScreenLoading loading={request.isFetching} />
     </>
-  );
-};
+  )
+}
 
-export default observer(App);
+export default observer(App)

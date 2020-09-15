@@ -1,6 +1,6 @@
-import http from "@/utils/http";
+import http from '@/utils/http'
 
 export async function apiGetTopics() {
-  const url = "/topics";
-  return await http.get(url);
+  const url = '/topics'
+  return await http.get(url)
 }
