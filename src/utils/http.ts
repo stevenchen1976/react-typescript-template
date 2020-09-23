@@ -1,45 +1,45 @@
-import axios from "axios";
+import axios from 'axios'
 
-const isDev = process.env.NODE_ENV === "development";
-const defaultProxyPrefix = process.env.REACT_APP_DEFAULT_PROXY_PREFIX;
-const customProxyRegx = new RegExp(process.env.REACT_APP_CUSTOM_PROXY_REGEXP || "");
-const httpRegx = /^http(s?):\/\//;
+const isDev = process.env.NODE_ENV === 'development'
+const defaultProxyPrefix = process.env.REACT_APP_DEFAULT_PROXY_PREFIX
+const customProxyRegx = new RegExp(process.env.REACT_APP_CUSTOM_PROXY_REGEXP || '')
+const httpRegx = /^http(s?):\/\//
 
-export const withProxy = (url = "") => {
+export const withProxy = (url = '') => {
   if (httpRegx.test(url)) {
-    return url;
+    return url
   }
 
-  const hasCustomPrefix = customProxyRegx.test(url);
+  const hasCustomPrefix = customProxyRegx.test(url)
   if (hasCustomPrefix) {
     if (isDev) {
-      return url;
+      return url
     } else {
-      const urlArr = url.split("/");
-      urlArr.splice(0, 2);
-      const baseReqUrl = "/" + urlArr.join("/");
+      const urlArr = url.split('/')
+      urlArr.splice(0, 2)
+      const baseReqUrl = '/' + urlArr.join('/')
 
-      return baseReqUrl;
+      return baseReqUrl
     }
   } else {
-    return isDev ? defaultProxyPrefix + url : url;
+    return isDev ? defaultProxyPrefix + url : url
   }
-};
+}
 
 export const axiosInstance = axios.create({
-  baseURL: "",
+  baseURL: '',
   timeout: 10000,
-  responseType: "json",
+  responseType: 'json',
   headers: {
-    "Content-Type": "application/json;charset=utf-8"
-  }
-});
+    'Content-Type': 'application/json;charset=utf-8',
+  },
+})
 
 const http = {
-  get: (url: string, params = {}) => axiosInstance.get(url, { params }),
-  delete: (url: string, params = {}) => axiosInstance.delete(url, { params }),
+  get: (url: string, params = {}, config = {}) => axiosInstance.get(url, { params, ...config }),
+  delete: (url: string, params = {}, config = {}) => axiosInstance.delete(url, { params, ...config }),
   post: axiosInstance.post,
-  put: axiosInstance.put
-};
+  put: axiosInstance.put,
+}
 
-export default http;
+export default http

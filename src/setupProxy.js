@@ -4,8 +4,8 @@ const customProxyRegx = new RegExp(process.env.REACT_APP_CUSTOM_PROXY_REGEXP || 
 const defaultProxy = process.env.REACT_APP_DEFAULT_PROXY
 
 const createProxy = (url = '', target = '') => {
-  if (url !== defaultProxy && !customProxyRegx.test(url)) {
-    console.error('自定义代理前缀不符合格式')
+  if (url !== defaultProxyPrefix && !customProxyRegx.test(url)) {
+    throw Error(`\n代理错误:自定义代理前缀 "${url}" 不符合格式要求\n`)
   }
 
   return createProxyMiddleware(url, {
@@ -17,5 +17,5 @@ const createProxy = (url = '', target = '') => {
   })
 }
 module.exports = function (app) {
-  app.use(createProxy(defaultProxyPrefix, defaultProxy))
+  app.use(createProxy(defaultProxyPrefix, defaultProxy), createProxy('/api-test', 'http://www.my-website.com/api'))
 }
