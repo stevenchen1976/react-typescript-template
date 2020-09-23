@@ -1,7 +1,12 @@
 import { lazy } from 'react'
 import { RouteProps } from 'react-router-dom'
 
-const routes: RouteProps[] = [
+interface IRoute extends RouteProps {
+  title?: string
+  [key: string]: any
+}
+
+const routes: IRoute[] = [
   {
     path: '/',
     exact: true,

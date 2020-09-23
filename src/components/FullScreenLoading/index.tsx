@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Spin } from 'antd'
 import styles from './styles.module.less'
 
@@ -14,8 +14,10 @@ const FullScreenLoading: React.FC<Props> = ({ loading = false, zIndex = 10 }) =>
     }
   }, [])
 
+  const className = useMemo(() => (loading ? styles.container_loading : styles.container), [loading])
+
   return (
-    <div className={loading ? styles.container_loading : styles.container} style={{ zIndex }} onClick={eventHandler}>
+    <div className={className} style={{ zIndex }} onClick={eventHandler}>
       <Spin spinning={loading} />
     </div>
   )
